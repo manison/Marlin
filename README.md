@@ -32,7 +32,7 @@ In summary, after some time dealing with Anet, my personal experience has been r
     - I've managed to get working OpenBLT, (PC-USB / SD / DFU) updates. ~~I'm still looking for a way to do a first time flash without flasher~~. A hardware flasher is very recommended for its price.
   - Onboard EEPROM I2C (4Kb/512B)
     - Adapted and working, but not usable. Onboard EEPROM IC is too small to store marlin config, so, expect EEPROM errors if used. Use FLASH_EEPROM_EMULATION instead or solder another 24CXX EEPROM IC (24C32 or above recommended).
-  - Onboard FLASH (128Mb/16MB) 
+  - Onboard FLASH (128Mb/16MB)
     - Ready. Tested LVGL from MKS (ET5 TFT). Not used, as not dedicated or universal LVGL UI has been designed AFAIK.
 ### On progress:
   - No work in progress
@@ -69,12 +69,17 @@ You have two options to install/update this firmware:
 
 1. Download or clone this [repo](https://github.com/davidtgbe/Marlin/archive/bugfix-2.0.x.zip). Ensure you build the firmware with **latest sources**, as firmware.srec file will not be built with older sources.
 
-2. Make sure to modify your config.h and config_adv.h according to your ET4/5 model (ET4, ET5, ET4 PRO, ET4+, ...) or you can also use [EasyConfig](https://github.com/davidtgbe/Marlin/blob/bugfix-2.0.x/Marlin/EasyConfig.h) for a simple configuration experience.
+2. You have two options to configure your own Marlin build:
+- a) **Recommended**. Use [EasyConfig](https://github.com/davidtgbe/Marlin/blob/bugfix-2.0.x/Marlin/EasyConfig.h) for a simple configuration experience. Make sure you read the whole EasyConfig.h file carefully. It contains instructions to configure it.
+- b) Configure your build from scratch.
+    - [User configurations](https://github.com/davidtgbe/Marlin/tree/bugfix-2.0.x/config) **are neither updated nor maintaned**. Please, read the readme.md inside the config folder. **Don't copy paste these files.**
+    - Provided configuration.h and configuration_adv.h files in this repo correspond to a regular ET4/TMC2208 model with attachable bed levelling sensor.
+    - Make sure to modify your config.h and config_adv.h according to your ET4/5 model (ET4, ET5, ET4 PRO, ET4+, ...)
     - Settings as driver model (A4988/TMC2208), Z endstop position (UP/DOWN), TFT resolution, XYZ size, homming offsets, auto bed levelling sensor, etc, need to be defined according to your model.
     - Provided configuration.h and configuration_adv.h files correspond to a regular ET4/TMC2208 model with attachable bed levelling sensor.
     - Fine tunning could be needed (e.g. XYZE [steps](https://marlinfw.org/docs/gcode/M092.html) or offsets, Jerks, JD, LA, etc).
 
-3. If you are going to take **option A** from considerations section (not using a BL), **you can skip this step**. Otherwise, you need to offset the firmware to give some room to the BL. That is achieved by uncommenting a line in **platform.ini** file. It is commented by default:
+3. If you are going to take **option A** from considerations section (not using a BL), **you can skip this step**. Otherwise, you need to offset the firmware to give some room to the BL. That is achieved by uncommenting a line in [<ProjectFolder>\ini\stm32f4.ini](https://github.com/davidtgbe/Marlin/blob/bugfix-2.0.x/ini/stm32f4.ini) file. It is commented by default:
 ```
 #
 # Anet ET4-MB_V1.x/ET4P-MB_V1.x (STM32F407VGT6 ARM Cortex-M4)

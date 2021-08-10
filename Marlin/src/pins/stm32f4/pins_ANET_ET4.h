@@ -57,13 +57,12 @@
   #define FLASH_EEPROM_LEVELING
 #elif ENABLED(I2C_EEPROM)
   // AT24C04C, Size 4Kb/512B, PageSize 16B
-  // Not working. 512 Bytes are not enough to store all config settings.
+  // Not working. 512 Bytes are not enough to store all config settings. Tested: Replaced with AT24C256 IC and it works fine. 
   #define I2C_SDA_PIN                       PB11
   #define I2C_SCL_PIN                       PB10
   #define EEPROM_DEVICE_ADDRESS             0x50
   #define MARLIN_EEPROM_SIZE                0x200                // 4Kb (From Datasheet)
-  #define EEPROM_WRITE_DELAY                5
-#endif  
+#endif
 
 //
 // Limit Switches
@@ -164,14 +163,18 @@
  *  - FSMC/DMA and 8080-8 interface
  */
 
-#define TFT_RESET_PIN                       PE6
-#define TFT_CS_PIN                          PD7
-#define TFT_RS_PIN                          PD13
-#define TFT_INTERFACE_FSMC_8BIT
+#if HAS_SPI_TFT || HAS_FSMC_TFT
+  #define TFT_RESET_PIN                     PE6
+  #define TFT_CS_PIN                        PD7
+  #define TFT_RS_PIN                        PD13
 
-#define LCD_USE_DMA_FSMC                          // Use DMA transfers to send data to the TFT
-#define FSMC_CS_PIN                   TFT_CS_PIN
-#define FSMC_RS_PIN                   TFT_RS_PIN
+  #if HAS_FSMC_TFT
+    #define LCD_USE_DMA_FSMC                      // Use DMA transfers to send data to the TFT
+    #define FSMC_CS_PIN               TFT_CS_PIN
+    #define FSMC_RS_PIN               TFT_RS_PIN
+    #define TFT_INTERFACE_FSMC_8BIT
+  #endif
+#endif
 
 //
 // Touch Screen
@@ -229,23 +232,37 @@
 //
 
 /**
- * Status: SPI Working. Reported random problems with SDIO.
+ * Status: SPI Working. Reported random problems with SDIO. 
+ * Need SDIO testing after some recevntly SDIO rework
  */
 
-//#define SDIO_SUPPORT
+//define SDIO_SUPPORT
 
 #ifndef SDCARD_CONNECTION
   #define SDCARD_CONNECTION         CUSTOM_CABLE
 #endif
 
 #if ENABLED(SDSUPPORT)
+  #ifndef SDIO_D0_PIN
+    #define SDIO_D0_PIN                       PC8
+  #endif
+  #ifndef SDIO_D1_PIN
+    #define SDIO_D1_PIN                       PC9
+  #endif
+  #ifndef SDIO_D2_PIN
+    #define SDIO_D2_PIN                       PC10
+  #endif
+  #ifndef SDIO_D3_PIN
+    #define SDIO_D3_PIN                       PC11
+  #endif
+  #ifndef SDIO_CK_PIN
+    #define SDIO_CK_PIN                       PC12
+  #endif
+  #ifndef SDIO_CMD_PIN
+    #define SDIO_CMD_PIN                      PD2
+  #endif
 
-  #define SDIO_D0_PIN                       PC8
-  #define SDIO_D1_PIN                       PC9
-  #define SDIO_D2_PIN                       PC10
-  #define SDIO_D3_PIN                       PC11
-  #define SDIO_CK_PIN                       PC12
-  #define SDIO_CMD_PIN                      PD2
+  #define SDIO_CLOCK                          24000000 // 24 MHz
 
   #if DISABLED(SDIO_SUPPORT)
     #define SOFTWARE_SPI

@@ -42,23 +42,23 @@
  *    You can refer to these defaults on the table below. Any modifications you have
  *    made to your specific printer model which doesn't match the defaults showed below in the
  *    table, must be defined uncommenting corresponding line.
- * 4. Change platform.ini as usual to uncomment offset line if you are going to build the 
+ * 4. Change <ProjectFolder>\ini\stm32f4.ini to uncomment offset line if you are going to build the 
  *    FW to use it with OpenBLT bootloader.
  * 5. Build
  * 
  *  ET series default specifications:
- *	+-------------------+-------------+------------+--------------+--------------+---------+
- *	|       Model       |    SIZE     | AUTOLEVEL  | HOMING Z-DIR | PHY ENDSTOPS | DRIVERS |
- *	+-------------------+-------------+------------+--------------+--------------+---------+
- *	| ET4               | 220X220X250 | FILM STRIP | UP           | X-L,Y-B,Z-T  | A4988   |
- *	| ET4X              | 220X220X250 | NONE       | DOWN         | X-L,Y-B,Z-B  | A4988   |
- *	| ET4+              | 220X220X250 | CAPACITIVE | DOWN         | X-L,Y-B      | A4988   |
- *	| ET4 PRO           | 220X220X250 | CAPACITIVE | DOWN         | X-L,Y-B      | TMC2208 |
- *	| ET5               | 300X300X400 | CAPACITIVE | DOWN         | X-L,Y-B      | A4988   |
- *	| ET5X              | 300X300X400 | CAPACITIVE | DOWN         | X-L,Y-B      | A4988   |
- *	| ET5 PRO           | 300X300X400 | CAPACITIVE | DOWN         | X-L,Y-B      | TMC2208 |
- *	+-------------------+-------------+------------+--------------+--------------+---------+
- *	PHY endstops legend: Axis + (Left, Right, Front, Back, Top, Bottom)
+ *    +-------------------+-------------+------------+--------------+--------------+---------+
+ *    |       Model       |    SIZE     | AUTOLEVEL  | HOMING Z-DIR | PHY ENDSTOPS | DRIVERS |
+ *    +-------------------+-------------+------------+--------------+--------------+---------+
+ *    | ET4               | 220X220X250 | FILM STRIP | UP           | X-L,Y-B,Z-T  | A4988   |
+ *    | ET4X              | 220X220X250 | NONE       | DOWN         | X-L,Y-B,Z-B  | A4988   |
+ *    | ET4+              | 220X220X250 | CAPACITIVE | DOWN         | X-L,Y-B      | A4988   |
+ *    | ET4 PRO           | 220X220X250 | CAPACITIVE | DOWN         | X-L,Y-B      | TMC2208 |
+ *    | ET5               | 300X300X400 | CAPACITIVE | DOWN         | X-L,Y-B      | A4988   |
+ *    | ET5X              | 300X300X400 | CAPACITIVE | DOWN         | X-L,Y-B      | A4988   |
+ *    | ET5 PRO           | 300X300X400 | CAPACITIVE | DOWN         | X-L,Y-B      | TMC2208 |
+ *    +-------------------+-------------+------------+--------------+--------------+---------+
+ *    PHY endstops legend: Axis + (Left, Right, Front, Back, Top, Bottom)
  *
  */
 
@@ -73,7 +73,7 @@
  * Values: ET_MODEL_ET4 ,ET_MODEL_ET4_PLUS, ET_MODEL_ET4X, ET_MODEL_ET4_PRO, ET_MODEL_ET5, ET_MODEL_ET5X, ET_MODEL_ET5_PRO
  */
 
-#define ET_MODEL            		ET_MODEL_ET4
+#define ET_MODEL                    ET_MODEL_ET4
 
 /**
  * Parameter: ET_BOARD
@@ -82,7 +82,7 @@
  * Values: ET_BOARD_SILENT, ET_BOARD_NOISY
  */
 
-//#define ET_BOARD            	  ET_BOARD_SILENT
+//#define ET_BOARD                  ET_BOARD_SILENT
 
 
 /**
@@ -92,16 +92,16 @@
  * Values: ET_LV_NONE, ET_LV_BLTOUCH, ET_LV_MOUNTED_PROBE, ET_LV_FILM_STRIP
  */
 
-//#define ET_LEVELLING        		ET_LV_BLTOUCH
+//#define ET_LEVELLING              ET_LV_BLTOUCH
 
 /**
- * Parameter: ET_Z_HOMING_DIR	
+ * Parameter: ET_Z_HOMING_DIR
  * Description: Define homing direction if you have changed it from factory default.
  * Type: Optional.
  * Values: ET_Z_HOMING_DIR_UP, ET_Z_HOMING_DIR_DOWN
  */
 
-//#define ET_Z_HOMING_DIR	  			ET_Z_HOMING_DIR_DOWN
+//#define ET_Z_HOMING_DIR           ET_Z_HOMING_DIR_DOWN
 
 /**
  * Parameter: ET_MOD
@@ -111,7 +111,7 @@
  * Usage: To select multiple mods use '|' to join. ex: #define ET_MOD (ET_MOD_BMG | ET_MOD_V6)
  */
 
-//#define ET_MOD              	  ET_MOD_NONE
+//#define ET_MOD                    ET_MOD_BMG
 
 /**
  * Parameter: ET_Z_ENDSTOP_POSTION 
@@ -120,7 +120,7 @@
  * Values: ET_Z_ENDSTOP_POSTION_NONE, ET_Z_ENDSTOP_POSTION_TOP, ET_Z_ENDSTOP_POSTION_BOTTOM
  */
 
-//#define ET_Z_ENDSTOP_POSTION    ET_Z_ENDSTOP_POSTION_NONE
+//#define ET_Z_ENDSTOP_POSTION      ET_Z_ENDSTOP_POSTION_NONE
 
 /**
  * Parameter: ET_CUSTOM_MACHINE_NAME
@@ -128,7 +128,7 @@
  * Type: Optional 
  */
 
-//#define ET_CUSTOM_MACHINE_NAME 	"Anet ET4 A4988 BLTOUCH" 
+#define ET_CUSTOM_MACHINE_NAME     "Anet ET4" 
 
 // ----------------------------------------------
 // 3. Basic Post-installation configuration steps
@@ -140,33 +140,33 @@
  *
  * 1. EEPROM initialization -> https://marlinfw.org/docs/gcode/M502.html
  * 
- * 		> M502
- * 		> M500
+ *         > M502
+ *         > M500
  *
  * 2. Hotend PID autotune -> https://marlinfw.org/docs/gcode/M303.html ; https://marlinfw.org/docs/gcode/M301.html
  * 
- * 		> M303 E0 S200 C3 U
+ *         > M303 E0 S200 C3 U
  * 
  * 3. Bed PID autotune -> https://marlinfw.org/docs/gcode/M303.html ; https://marlinfw.org/docs/gcode/M304.html
  *
- * 		> M303 E-1 S60 C3 U 
- * 		
+ *         > M303 E-1 S60 C3 U 
+ *         
  * 4. Calibrate motors steps -> https://marlinfw.org/docs/gcode/M092.html | Guide: https://www.instructables.com/Calibrating-your-3D-printer-using-minimal-filament/
  *
- * 		> M92 E<value> X<value> Y<value> Z<value>
- * 		
+ *         > M92 E<value> X<value> Y<value> Z<value>
+ *         
  * 5. Nozzle to probe offset. Only in case of mounted probe autolevel feature -> https://marlinfw.org/docs/gcode/M851.html | Guide: https://www.thingiverse.com/thing:3700194
  *
- * 		> M851 X<value> Y<value> Z<value> 
+ *         > M851 X<value> Y<value> Z<value> 
  *
  * 6. Save EEPROM -> https://marlinfw.org/docs/gcode/M500.html 
  *
- * 		> M500 
+ *         > M500 
  *
  * Other useful commands:
  * - Bltouch test
  *
- * 		> M43 S P0
+ *         > M43 S P0
  *
  * Other guides:
  * https://marlinfw.org/docs/configuration/configuration.html
@@ -214,6 +214,8 @@ SEGMENT_LEVELED_MOVES
 LEVELED_SEGMENT_LENGTH   
 AUTO_BED_LEVELING_BILINEAR
 Z_MIN_PROBE_REPEATABILITY_TEST
+BABYSTEP_ZPROBE_OFFSET
+Z_MIN_PROBE_ENDSTOP_INVERTING
 
 -- Z_Homing dir --
 X_HOME_DIR
@@ -227,6 +229,12 @@ USE_ZMIN_PLUG
 USE_XMAX_PLUG
 USE_YMAX_PLUG
 USE_ZMAX_PLUG
+
+X_MIN_ENDSTOP_INVERTING
+Y_MIN_ENDSTOP_INVERTING
+Z_MIN_ENDSTOP_INVERTING
+Z_MAX_ENDSTOP_INVERTING
+Z_MIN_PROBE_ENDSTOP_INVERTING
 
 -- Temp sensors --
 TEMP_SENSOR_0
